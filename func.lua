@@ -30,7 +30,7 @@ end
 function get_recipes_by_result(result_name)
 	local output = {}
 	for i, e in pairs(game.recipe_prototypes) do
-		if has_value(e.ingredients, result_name) then
+		if has_value(e.products, result_name) then
 			table.insert(output, e)
 		end
 	end
