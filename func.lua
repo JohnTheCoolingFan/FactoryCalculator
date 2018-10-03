@@ -1,0 +1,64 @@
+function get_prototype_by_name(tab, name)
+	for i, e in pairs(tab) do
+		if e.name == name then
+			return e
+		end
+	end
+	return false
+end
+
+function has_value (tab, val) --Thanks Oka for this function ( https://stackoverflow.com/users/2505965/oka ). I modified it for my code.
+    for index, value in ipairs(tab) do
+        if value.name == val then
+            return true
+        end
+    end
+
+    return false
+end
+
+function has_valueSecond (tab, val)
+    for index, value in ipairs(tab) do
+        if value.ingredient == val then
+            return true, index
+        end
+    end
+
+    return false
+end
+
+function get_recipes_by_result(resultName)
+	local output = {}
+	for i, e in pairs(game.recipe_prototypes) do
+		if has_value(e.ingredients, resultName) then
+			table.insert(output, e)
+		end
+	end
+	return output
+end
+
+function form_dropdown(recipes)
+	local result = {}
+	for i, recipe in pairs(recipes) do
+		table.insert(result, recipe.name)
+	end
+	return result
+end
+
+function tablelength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
+end
+
+--debugging fucntions
+debugger = {}
+
+debugger.start = function(filename, continue)
+	debugger.filename = filename
+	game.write_file(filename, "Start of log.\n", continue)
+end
+
+debugger.write = function(message)
+	game.write_file(debugger.filename, message.."\n", true)
+end
