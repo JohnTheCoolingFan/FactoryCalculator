@@ -21,18 +21,16 @@ function(event)
 		settingsFrame.style.visible = true
 	elseif string.find(clicked.name, "radiobutton") then --Radiobuttons
 		if clicked.name == "FactCalc-radiobutton-number" then
-			settingsFarme["FactCalc-count-belt"]["FactCalc-radiobutton-belt"].state = false
-			settingsFarme["FactCalc-count-assembler"]["FactCalc-radiobutton-assembler"].state = false
+			settingsFrame["FactCalc-count-belt"]["FactCalc-radiobutton-belt"].state = false
+			settingsFrame["FactCalc-count-assembler"]["FactCalc-radiobutton-assembler"].state = false
 		elseif clicked.name == "FactCalc-radiobutton-belt" then
-			settingsFarme["FactCalc-count-number"]["FactCalc-radiobutton-number"].state = false
-			settingsFarme["FactCalc-count-assembler"]["FactCalc-radiobutton-assembler"].state = false
+			settingsFrame["FactCalc-count-number"]["FactCalc-radiobutton-number"].state = false
+			settingsFrame["FactCalc-count-assembler"]["FactCalc-radiobutton-assembler"].state = false
 		elseif clicked.name == "FactCalc-radiobutton-assembler" then
-			settingsFarme["FactCalc-count-belt"]["FactCalc-radiobutton-belt"].state = false
-			settingsFarme["FactCalc-count-number"]["FactCalc-radiobutton-number"].state = false
+			settingsFrame["FactCalc-count-belt"]["FactCalc-radiobutton-belt"].state = false
+			settingsFrame["FactCalc-count-number"]["FactCalc-radiobutton-number"].state = false
 		end
 	elseif string.find(clicked.name, "flipbutton") then --Flip buttons
-		--player.print(clicked.name)
-		--player.print(clicked.style.name)
 		if clicked.name == "FactCalc-flipbutton-number" then
 			if clicked.style.name == "flip_button_left" then
 				clicked.style = "flip_button_right"
