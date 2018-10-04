@@ -31,7 +31,7 @@ end
 
 --main function
 function calculateFactory(player)
-	debugger.write("Called function calculateFactory()")
+	debugger.write("Start of log\nCalled function calculateFactory()")
 	recursion_counter = 0
 	FactCalcSettings = {}
 	local gui = player.gui.center["FactCalc-main-flow"]["FactCalc-result-frame"]
@@ -77,7 +77,7 @@ function calculateFactory(player)
 		end
 	
 	elseif settingsGui["FactCalc-count-assembler"]["FactCalc-radiobutton-assembler"].state then
-		outputValue = tonumber(settingsGui["FactCalc-count-assembler"]["FactCalc-textfield-assembler"].text) * game.item_prototypes[settingsGui["FactCalc-count-assembler"]["FactCalc-choose-assembler"].value].crafting_speed / outputRecipe.energy
+		outputValue = tonumber(settingsGui["FactCalc-count-assembler"]["FactCalc-textfield-assembler"].text) * game.item_prototypes[settingsGui["FactCalc-count-assembler"]["FactCalc-choose-assembler"].elem_value].place_result.crafting_speed / outputRecipe.energy
 	
 	else
 		debugger.write("[ERROR] Error with radiobuttons, return.")
@@ -145,11 +145,11 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 	recursion_counter = recursion_counter + 1
 	if recursion_counter > settings.get_player_settings(player)["FactCalc-max-recursion"].value then
 	debugger.write(settings.get_player_settings(player)["FactCalc-max-recursion"].value.." cycles done. exiting build_recipes_tree().")
-	player.print("[DEBUG][FactoryCalculator] 100 cycles done. Calling return.")
+	player.print("[DEBUG][FactoryCalculator] "..settings.get_player_settings(player)["FactCalc-max-recursion"].value.." cycles done. Calling return.")
 	return
 	end --thanks _romanchik_ for this костыль
 	
-	local assemblerSpeed = 0.75 -- In russian language this named "костыль". I need to make ability to choose assembler for each recipe...
+	local assembler_speed = 0.75 -- In russian language this named "костыль". I need to make ability to choose assembler for each recipe...
 	
 	debugger.write("Getting recipe")
 	--getting needed recipe
@@ -177,10 +177,12 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 	debugger.write("Recipe getting done.")
 	
 	--calculating
-	local assemblerCount = math.ceil((craft_count * recipe.energy) / assemblerSpeed)
-	craft_count = (assemblerCount * assemblerSpeed) / recipe.energy
+	local assembler_count = math.ceil((craft_count * recipe.energy) / assembler_speed / recipe.products[1].amount)
 	
-	debugger.write("[DEBUG][FactoryCalculator] index: "..index..", stage: calculating, recipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index)
+	--just a piece of debug magic
+	debugger.write("Stage: calculating, index: "..index.."\nCalculations: assembler_count = math.ceil(("..craft_count.." * "..recipe.energy..") / "..assembler_speed..") = "..assembler_count.."\nRecipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index)
+	
+	craft_count = (assembler_count * assembler_speed) / recipe.energy * recipe.products[1].amount
 	player.print("[DEBUG][FactoryCalculator] index: "..index..", stage: calculating, recipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index)
 	
 	--gui creating
@@ -213,7 +215,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 	infoTable.add{
 		name = "FactCalc-assembler-count-label-" .. index,
 		type = "label",
-		caption = "X" .. assemblerCount
+		caption = "X" .. assembler_count
 	}
 	infoTable.add{
 		name = "FactCalc-recipe-sprite-" .. index,
@@ -247,7 +249,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 		if ingredient.type == "item" then
 			items_table = FactCalcSettings.main.input.items
 			input_prototypes = game.item_prototypes
-		elseif inredient.type == "fluid" then
+		elseif ingredient.type == "fluid" then
 			items_table = FactCalcSettings.main.input.fluids
 			input_prototypes = game.fluid_prototypes
 		else
@@ -259,7 +261,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 		--Is input ingredient or continue this recursion?
 		if has_value(items_table, ingredient.name) then
 			debugger.write("Got input ingredient. Index: "..index.."-"..ingredient_index..", ingredient name: "..ingredient.name)
-			recipes_tree_end(input_prototypes[ingredient.name], craft_count_ingredient, index.."-"..ingredient_index, ingredients_flow)
+			recipes_tree_end(ingredient, craft_count_ingredient, index.."-"..ingredient_index, ingredients_flow)
 		else
 			debugger.write("Got non-input ingredient. Entering new cycle. Index: "..index.."-"..ingredient_index..", ingredient name: "..ingredient.name)
 			build_recipes_tree(ingredients_flow, get_recipes_by_result(ingredient.name), craft_count_ingredient, index.."-"..ingredient_index)
@@ -268,11 +270,11 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 	debugger.write("Cycle with index "..index.." ended.")
 end
 
-function recipes_tree_end(prototype, count, index, gui)
-	debugger.write("Started end function. Index: "..index)
+function recipes_tree_end(ingredient, count, index, gui)
+	debugger.write("Started end function. Index: "..index..", ingredient: "..ingredient.name)
 	--Getting some variables
 	local ingredient_sprite = ""
-	if prototype.type == fluid then ingredient_sprite = "fluid/"..prototype.name else ingredient_sprite = "item/"..prototype.name end
+	if ingredient.type == "fluid" then ingredient_sprite = "fluid/"..ingredient.name else ingredient_sprite = "item/"..ingredient.name end
 	
 	--Gui creation
 	local workplace = gui.add {
