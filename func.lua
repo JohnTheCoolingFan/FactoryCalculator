@@ -56,7 +56,7 @@ debugger = {}
 
 debugger.start = function(filename, continue)
 	debugger.filename = filename
-	game.write_file(filename, "Start of log.\n", continue)
+	game.write_file(filename, "[Debugger] Start of log.\n", continue)
 end
 
 debugger.write = function(message)
