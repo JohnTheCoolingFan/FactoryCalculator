@@ -89,7 +89,6 @@ function calculateFactory(player)
 	debugger.write("setting up FactCalcSettings")
 	FactCalcSettings = {
 		main = {
-			name = "FactCalc-stats",
 			output = {
 				recipe = outputRecipe,
 				count = outputValue
@@ -176,11 +175,24 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 	else recipe = recipes[1] end
 	debugger.write("Recipe getting done.")
 	
-	--calculating
-	local assembler_count = math.ceil((craft_count * recipe.energy) / assembler_speed / recipe.products[1].amount)
+	--calculating count of assemblers and output items. Intrenally this step named "calculating"
+	local shown_count = 0
+	local assembler_count = craft_count * recipe.energy / assembler_speed / recipe.products[1].amount
+	if settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "calculte-ceil" then
+		assembler_count = math.ceil(assembler_count)
+		shown_count = assembler_count
+	elseif settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "show-ceil" then
+		shown_count = math.ceil(assembler_count)
+	elseif settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "no-ceil" then
+		shown_count = assembler_count
+	else
+		debugger.write("Got wrong setting value at calculating stage. Applying default.")
+		shown_count = math.ceil(assembler_count)
+	end
+	
 	
 	--just a piece of debug magic
-	debugger.write("Stage: calculating, index: "..index.."\nCalculations: assembler_count = math.ceil(("..craft_count.." * "..recipe.energy..") / "..assembler_speed..") = "..assembler_count.."\nRecipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index)
+	debugger.write("Stage: calculating, index: "..index.."\nCalculations: assembler_count = math.ceil(("..craft_count.." * "..recipe.energy..") / "..assembler_speed.." / "..recipe.products[1].amount..") = "..assembler_count.."\nRecipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index)
 	
 	craft_count = (assembler_count * assembler_speed) / recipe.energy * recipe.products[1].amount
 	player.print("[DEBUG][FactoryCalculator] index: "..index..", stage: calculating, recipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index)
@@ -215,7 +227,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 	infoTable.add{
 		name = "FactCalc-assembler-count-label-" .. index,
 		type = "label",
-		caption = "X" .. assembler_count
+		caption = "X" .. shown_count
 	}
 	infoTable.add{
 		name = "FactCalc-recipe-sprite-" .. index,
@@ -254,7 +266,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 			input_prototypes = game.fluid_prototypes
 		else
 			debugger.write("Unknown ingredient type: "..ingredient.type.." at "..index.."-"..ingredient_index.."-"..ingredient_index)
-			player.print("An error occured while calculating. Please leave a report on mod page and add log-file from script-output folder.")
+			player.print("An error occured while calculating. Please leave a report on mod page and add log-file from script-output folder (script-output/FactCalc.log).")
 			return
 		end
 		
