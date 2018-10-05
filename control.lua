@@ -99,8 +99,8 @@ function calculateFactory(player)
 			},
 			time_units = minsSecs,
 			input_count = {
-				items = {},
-				fluids = {}
+				item = {},
+				fluid = {}
 			}
 		},
 		dropdowns = {}
@@ -108,10 +108,10 @@ function calculateFactory(player)
 	
 	for i, ingredient in pairs(input_items) do
 		debugger.write("Creating count variables. Ingredient: "..ingredient.name..", i: "..i)
-		FactCalcSettings.main.input_count.items[ingredient.name.."-count"] = 0
+		FactCalcSettings.main.input_count.item[ingredient.name] = 0
 	end
 	for i, ingredient in pairs(input_fluids) do
-		FactCalcSettings.main.input_count.fluids[ingredient.name.."-count"] = 0
+		FactCalcSettings.main.input_count.fluid[ingredient.name] = 0
 	end
 	
 	local workframe = gui.add{
@@ -125,12 +125,52 @@ function calculateFactory(player)
 	build_recipes_tree(workframe, {outputRecipe}, outputValue, "0")
 	debugger.write("build_recipes_tree() finished.\nEnd of log.\n\n\n")
 	
-	local statsPlace = gui.add{
+	local stats_place = gui.add{
 		name = "FactCalc-resultStatistics",
 		type = "frame",
 		direction = "vertical",
 		caption = "Stats:"
 	}
+	
+	local stats_items = stats_place.add{
+		name = "FactCalc-stats-items-table",
+		type = "table",
+		column_count = 2,
+		caption = "Items",
+		draw_horizontal_lines = true
+	}
+	for i, count in pairs(FactCalcSettings.main.input_count.item) do
+		stats_items.add{
+			name = "FactCalc-input-stats-item-sprite-"..i,
+			type = "sprite",
+			sprite = "item/"..i
+		}
+		stats_items.add{
+			name = "FactCalcSettings-input-stats-items-count-"..i,
+			type = "label",
+			caption = "X"..count
+		}
+	end
+	
+	local stats_fluids = stats_place.add{
+		name = "FactCalc-stats-fluids-table",
+		type = "table",
+		column_count = 2,
+		caption = "Fluids",
+		draw_horizontal_lines = true
+	}
+	for i, count in pairs(FactCalcSettings.main.input_count.fluid) do
+		stats_items.add{
+			name = "FactCalc-input-stats-fluid-sprite-"..i,
+			type = "sprite",
+			sprite = "item/"..i
+		}
+		stats_items.add{
+			name = "FactCalcSettings-input-stats-fluid-count-"..i,
+			type = "label",
+			caption = "X"..count
+		}
+	end
 	
 	gui.style.visible = true
 end
@@ -287,6 +327,7 @@ function recipes_tree_end(ingredient, count, index, gui)
 	--Getting some variables
 	local ingredient_sprite = ""
 	if ingredient.type == "fluid" then ingredient_sprite = "fluid/"..ingredient.name else ingredient_sprite = "item/"..ingredient.name end
+	FactCalcSettings.main.input_count[ingredient.type][ingredient.name] = FactCalcSettings.main.input_count[ingredient.type][ingredient.name] + count
 	
 	--Gui creation
 	local workplace = gui.add {
