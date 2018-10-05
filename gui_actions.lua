@@ -4,7 +4,6 @@ script.on_event(defines.events.on_gui_click,
 function(event)
 	local player = game.players[event.player_index]
 	local cGui = player.gui.center
-	local settingsFrame = cGui["FactCalc-main-flow"]["FactCalc-settings-frame"]
 	local clicked = event.element
 	
 	if not string.find(clicked.name, "FactCalc") then --has nothing to do with this mod
@@ -16,6 +15,8 @@ function(event)
 		resetAndReloadUI(player)
 		return
 	end
+	
+	local settingsFrame = cGui["FactCalc-main-flow"]["FactCalc-settings-frame"]
 	
 	if clicked.name == "FactCalc-open-calculator" then --"Open calculator" button
 		settingsFrame.style.visible = true
