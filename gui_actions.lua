@@ -3,19 +3,19 @@ require("gui_creation")
 script.on_event(defines.events.on_gui_click,
 function(event)
 	local player = game.players[event.player_index]
-    local cGui = player.gui.center
+	local cGui = player.gui.center
 	local settingsFrame = cGui["FactCalc-main-flow"]["FactCalc-settings-frame"]
-    local clicked = event.element
+	local clicked = event.element
 	
 	if not string.find(clicked.name, "FactCalc") then --has nothing to do with this mod
-        return
-    end
+		return
+	end
 	
 	if event.button == defines.mouse_button_type.right and clicked.name == "FactCalc-open-calculator" then --reset UI when right click on any button
-        player.print("Resetting UI...")
-        resetAndReloadUI(player)
-        return
-    end
+		player.print("Resetting UI...")
+		resetAndReloadUI(player)
+		return
+	end
 	
 	if clicked.name == "FactCalc-open-calculator" then --"Open calculator" button
 		settingsFrame.style.visible = true

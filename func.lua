@@ -8,23 +8,23 @@ function get_prototype_by_name(tab, name)
 end
 
 function has_value (tab, val) --Thanks Oka for this function ( https://stackoverflow.com/users/2505965/oka ). I modified it for my code.
-    for index, value in ipairs(tab) do
-        if value.name == val then
-            return true
-        end
-    end
+	for index, value in ipairs(tab) do
+		if value.name == val then
+			return true
+		end
+	end
 
-    return false
+	return false
 end
 
 function has_valueSecond (tab, val)
-    for index, value in ipairs(tab) do
-        if value.ingredient == val then
-            return true, index
-        end
-    end
+	for index, value in ipairs(tab) do
+		if value.ingredient == val then
+			return true, index
+		end
+	end
 
-    return false
+	return false
 end
 
 function get_recipes_by_result(result_name)

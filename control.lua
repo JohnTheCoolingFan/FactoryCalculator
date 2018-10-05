@@ -12,8 +12,8 @@ recursion_counter = 0
 --destroy gui (if exist) and draw gui
 script.on_init(
 function()
-    for i, player in pairs(game.players) do
-        resetAndReloadUI(player)
+	for i, player in pairs(game.players) do
+		resetAndReloadUI(player)
 	end
 end
 )
@@ -25,7 +25,7 @@ function(e)
 	debugger.start("FactCalc.log", false)
 	resetAndReloadUI(game.players[e.player_index])
 	game.players[e.player_index].print("Welcome to Factory Calculator, to open Calculator press button at the upper left")
-	game.players[e.player_index].print("Mod is in early beta, please read the tooltips and DON'T SELECT FLUIDS and DON'T SELECT MULTIPLE-OUTPUT RECIPES (like uranium or oil). Thanks.")
+	game.players[e.player_index].print("Mod is in early beta, report any issues on the GitHub or Factorio mod page")
 end
 )
 

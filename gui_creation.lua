@@ -2,7 +2,7 @@
 
 function resetAndReloadUI(player)
 	local lGui = player.gui.left
-    local cGui = player.gui.center
+	local cGui = player.gui.center
 	
 	--Clear the existing mod's GUI
 	if cGui["FactCalc-main-flow"] then
@@ -15,24 +15,24 @@ function resetAndReloadUI(player)
 	
 	--Add the button to open main interface
 	lGui.add{
-        type = "sprite-button",
-        tooltip = "Click to open Factory Calculator.",
-        name = "FactCalc-open-calculator",
-        sprite = "FactCalc-main-sprite",
-        style = "FactCalc_small_buttons"
-    }
+		type = "sprite-button",
+		tooltip = "Click to open Factory Calculator.",
+		name = "FactCalc-open-calculator",
+		sprite = "FactCalc-main-sprite",
+		style = "FactCalc_small_buttons"
+	}
 	
 	constructMainWindow(cGui.add{name = "FactCalc-main-flow", type = "flow", direction = "horizontal"})
 end
 
 function constructMainWindow(gui)
 	local frame = gui.add{
-        name = "FactCalc-settings-frame",
-        type = "frame",
-        caption = "Settings",
-        direction = "vertical"
-    }
-    frame.style.visible = false
+		name = "FactCalc-settings-frame",
+		type = "frame",
+		caption = "Settings",
+		direction = "vertical"
+	}
+	frame.style.visible = false
 	local frameResult = gui.add{
 		name = "FactCalc-result-frame",
 		type = "frame",
@@ -42,10 +42,10 @@ function constructMainWindow(gui)
 	frameResult.style.visible = false
 	
 	local chooseItem = frame.add{
-        name = "FactCalc-item-choose",
-        type = "flow",
-        direction = "horizontal"
-    }
+		name = "FactCalc-item-choose",
+		type = "flow",
+		direction = "horizontal"
+	}
 	chooseItem.add{
 		name = "FactCalc-item-label",
 		type = "label",
@@ -64,10 +64,10 @@ function constructMainWindow(gui)
 	}
 	
 	local countNumber = frame.add{
-        name = "FactCalc-count-number",
-        type = "flow",
-        direction = "horizontal"
-    }
+		name = "FactCalc-count-number",
+		type = "flow",
+		direction = "horizontal"
+	}
 	countNumber.add{
 		name = "FactCalc-radiobutton-number",
 		type = "radiobutton",
@@ -96,10 +96,10 @@ function constructMainWindow(gui)
 		}
 	
 	local countBelt = frame.add{
-        name = "FactCalc-count-belt",
-        type = "flow",
-        direction = "horizontal"
-    }
+		name = "FactCalc-count-belt",
+		type = "flow",
+		direction = "horizontal"
+	}
 	countBelt.add{
 		name = "FactCalc-radiobutton-belt",
 		type = "radiobutton",
@@ -198,9 +198,9 @@ function constructMainWindow(gui)
 	buttonsFlow.add{
 		name = "FactCalc-calculate",
 		type = "sprite-button",
-        tooltip = "Left mouse button click to calculate",
-        sprite = "FactCalc-main-sprite",
-        style = "FactCalc_small_buttons"
+		tooltip = "Left mouse button click to calculate",
+		sprite = "FactCalc-main-sprite",
+		style = "FactCalc_small_buttons"
 	}
 	buttonsFlow.add{
 		name = "FactCalc-recalculate",
