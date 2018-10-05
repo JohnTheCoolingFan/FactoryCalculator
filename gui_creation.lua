@@ -205,8 +205,8 @@ function constructMainWindow(gui)
 	buttonsFlow.add{
 		name = "FactCalc-recalculate",
 		type = "sprite-button",
-        tooltip = "Left mouse button click to calculate",
-        sprite = "FactCalc-main-sprite",
+        tooltip = "Left mouse button click to recalculate",
+        sprite = "FactCalc-recalc-sprite",
         style = "FactCalc_small_buttons"
 	}
 	
