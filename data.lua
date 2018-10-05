@@ -14,6 +14,14 @@ data:extend({
       priority = "extra-high",
       width = 32,
       height = 32,
+   },
+   {
+      type="sprite",
+      name="FactCalc-recalc-sprite",
+      filename = "__core__/graphics/reset.png",
+      priority = "extra-high",
+      width = 128,
+      height = 128,
    }
 })
 
