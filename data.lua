@@ -18,7 +18,7 @@ data:extend({
    {
       type="sprite",
       name="FactCalc-recalc-sprite",
-      filename = "__core__/graphics/reset.png",
+      filename = "__core__/graphics/icons/reset.png",
       priority = "extra-high",
       width = 128,
       height = 128,
