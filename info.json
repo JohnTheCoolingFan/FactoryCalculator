@@ -1,10 +1,11 @@
 {
 "name": "FactoryCalculator",
 "version": "0.0.1",
-"date": "2018-08-17",
 "title": "Factory Calculator",
 "author": "JohnTheCoolingFan",
-"factorio_version": "0.16",
-"dependencies": ["base >= 0.16.0"],
-"description": "Tool for in-game calculating needed machines."
+"contact": "ivan8215145640@gmail.com",
+"homepage": "https://discord.gg/grHVhE2",
+"dependencies": ["base >= 0.17.0"],
+"description": "Tool for in-game calculating needed machines.",
+"factorio_version": "0.17"
 }
