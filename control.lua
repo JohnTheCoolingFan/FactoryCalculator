@@ -233,7 +233,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 
 	-- Calculating count of assemblers and output items. Intrenally this step named "calculating"
 	local shown_count = 0
-	local assembler_count = craft_count * recipe.energy / assembler_speed / recipe.products[1].amount --C ount of assemblers
+	local assembler_count = craft_count * recipe.energy / assembler_speed / recipe.products[1].amount -- Count of assemblers
 	-- Calculate numbers depending on player's settings
 	if settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "calculte-ceil" then -- Calculate with ceiled numbers
 		assembler_count = math.ceil(assembler_count)
