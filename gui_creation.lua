@@ -1,19 +1,19 @@
---A file that holds all the functions this mod uses for gui creation.
+-- A file that holds all the functions this mod uses for gui creation.
 
 function resetAndReloadUI(player)
 	local lGui = player.gui.left
 	local cGui = player.gui.center
-	
-	--Clear the existing mod's GUI
+
+	-- Clear the existing mod's GUI
 	if cGui["FactCalc-main-flow"] then
 		cGui["FactCalc-main-flow"].destroy()
 	end
-	
+
 	if lGui["FactCalc-open-calculator"] then
 		lGui["FactCalc-open-calculator"].destroy()
 	end
-	
-	--Add the button to open main interface
+
+	-- Add the button to open main interface
 	lGui.add{
 		type = "sprite-button",
 		tooltip = "Click to open Factory Calculator.",
@@ -21,7 +21,7 @@ function resetAndReloadUI(player)
 		sprite = "FactCalc-main-sprite",
 		style = "FactCalc_small_buttons"
 	}
-	
+
 	constructMainWindow(cGui.add{name = "FactCalc-main-flow", type = "flow", direction = "horizontal"})
 end
 
@@ -40,7 +40,7 @@ function constructMainWindow(gui)
 		direction = "horizontal"
 	}
 	frameResult.style.visible = false
-	
+
 	local chooseItem = frame.add{
 		name = "FactCalc-item-choose",
 		type = "flow",
@@ -56,13 +56,13 @@ function constructMainWindow(gui)
 		type = "choose-elem-button",
 		elem_type = "recipe"
 	}
-	
+
 	frame.add{
 		name = "FactCalc-count-label",
 		type = "label",
 		caption = "Count:"
 	}
-	
+
 	local countNumber = frame.add{
 		name = "FactCalc-count-number",
 		type = "flow",
@@ -94,7 +94,7 @@ function constructMainWindow(gui)
 			type = "button",
 			style = "flip_button_left"
 		}
-	
+
 	local countBelt = frame.add{
 		name = "FactCalc-count-belt",
 		type = "flow",
@@ -132,7 +132,7 @@ function constructMainWindow(gui)
 			type = "button",
 			style = "flip_button_left"
 		}
-	
+
 	local countAssembler = frame.add{
 		name = "FactCalc-count-assembler",
 		type = "flow",
@@ -161,7 +161,7 @@ function constructMainWindow(gui)
 		text = "1"
 	}
 	TextfieldAssembler.style.width = 40
-	
+
 	local itemsTable = frame.add{
 		name = "FactCalc-items-table",
 		type = "table",
@@ -174,7 +174,7 @@ function constructMainWindow(gui)
 		column_count = 4,
 		caption = "Input resources (fluids)"
 	}
-	
+
 	for i = 0, 7, 1 do
 		itemsTable.add{
 			name = "FactCalc-choose-resource-item-" .. i,
@@ -189,7 +189,7 @@ function constructMainWindow(gui)
 			tooltip = "Select fluids that will come into this factory"
 		}
 	end
-	
+
 	local buttonsFlow = frame.add{
 		name = "FactCalc-buttons-flow",
 		type = "flow",
@@ -209,5 +209,5 @@ function constructMainWindow(gui)
         sprite = "FactCalc-recalc-sprite",
         style = "FactCalc_small_buttons"
 	}
-	
+
 end

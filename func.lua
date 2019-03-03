@@ -1,6 +1,6 @@
---This file contains functions used in other files
+-- This file contains functions used in other files
 
-function has_value (tab, val) --Thanks Oka for this function ( https://stackoverflow.com/users/2505965/oka ). I modified it for my code.
+function has_value (tab, val) -- Thanks Oka for this function ( https://stackoverflow.com/users/2505965/oka ). I modified it for my code.
 	for index, value in ipairs(tab) do
 		if value.name == val then
 			return true
@@ -34,7 +34,7 @@ function tablelength(T)
   return count
 end
 
---Debugger
+-- Debugger
 debugger = {}
 
 debugger.start = function(filename, continue)
