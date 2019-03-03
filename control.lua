@@ -1,14 +1,14 @@
---Connect files
+-- Require files
 require("gui_creation")
 require("gui_actions")
 require("func")
 
---"Global" variables
+-- "Global" variables
 FactCalcData = {}
 FactCalcSettings = {}
 recursion_counter = 0
 
---Destroy GUI (if exist) and draw a new
+-- Destroy GUI (if exist) and draw a new
 script.on_init(
 function()
 	for i, player in pairs(game.players) do
@@ -19,17 +19,17 @@ end
 
 script.on_event(defines.events.on_player_created,
 function(e)
-	debugger.start("FactCalc.log", false)          --debugger init
-	resetAndReloadUI(game.players[e.player_index]) --Redraw GUI
-	--"Welcome" and a small tutorial
+	debugger.start("FactCalc.log", false)          -- debugger init
+	resetAndReloadUI(game.players[e.player_index]) -- Redraw GUI
+	-- "Welcome" and a small tutorial
 	game.players[e.player_index].print("Welcome to Factory Calculator, to open Calculator press button at the upper left")
 	game.players[e.player_index].print("Mod is in early beta, report any issues on the GitHub or Factorio mod page")
 end
 )
 
---main function
+-- Main function
 function calculateFactory(player)
-	debugger.write("Start of log\nCalled function calculateFactory()")
+	debugger.write("Start of log\nStart of calculateFactory()")
 	recursion_counter = 0
 	FactCalcSettings = {}
 	local gui = player.gui.center["FactCalc-main-flow"]["FactCalc-result-frame"]
@@ -39,7 +39,7 @@ function calculateFactory(player)
 	local input_items = {}
 	local input_fluids = {}
 
-	debugger.write("Done setting up util variables. Setting input and output")
+	debugger.write("Done setting up and calculating util variables. Setting up and calculating input and output variables")
 	for i = 0, 7, 1 do
 		if settingsGui["FactCalc-items-table"]["FactCalc-choose-resource-item-"..i].elem_value ~= nil then
 			table.insert(input_items, game.item_prototypes[settingsGui["FactCalc-items-table"]["FactCalc-choose-resource-item-"..i].elem_value])
@@ -68,10 +68,9 @@ function calculateFactory(player)
 	elseif settingsGui["FactCalc-count-belt"]["FactCalc-radiobutton-belt"].state then
 		if game.item_prototypes[settingsGui["FactCalc-count-belt"]["FactCalc-choose-belt"].elem_value].place_result.type == "transport-belt" then
 			outputValue = game.item_prototypes[settingsGui["FactCalc-count-belt"]["FactCalc-choose-belt"].elem_value].place_result.belt_speed * beltSpeedMultiplier
-
 			if settingsGui["FactCalc-count-belt"]["FactCalc-addition-belt"]["FactCalc-flipbutton-belt"].style.name == "flip_button_right" then outputValue = outputValue / 2 end
 		else
-			player.print("Please, choose only transport belt items. If you selected belt item and this error message still appear, please report about this on mod page.")
+			player.print("Please, choose only transport belt items. If you selected belt item and this error message still appear, please report about this on mod page or on GitHub.")
 		end
 
 	elseif settingsGui["FactCalc-count-assembler"]["FactCalc-radiobutton-assembler"].state then
@@ -79,12 +78,12 @@ function calculateFactory(player)
 
 	else
 		debugger.write("[ERROR] Error with radiobuttons, return.")
-		player.print('Error with radiobuttons. Please leave a report on mod page.')
+		player.print('Error with radiobuttons. Please leave a report on mod page or on GitHub.')
 		resetAndReloadUI(player)
 		return
 	end
 
-	debugger.write("setting up FactCalcSettings")
+	debugger.write("Setting up FactCalcSettings")
 	FactCalcSettings = {
 		main = {
 			output = {
@@ -104,19 +103,22 @@ function calculateFactory(player)
 		dropdowns = {}
 	}
 
-	debugger.write("setting up FactCalcData")
+	debugger.write("Setting up FactCalcData")
 	FactCalcData = {
 		inputs = {}
 	}
 
+	debugger.write("Creating input count variables.")
 	for i, ingredient in pairs(input_items) do
-		debugger.write("Creating count variables. Ingredient: "..ingredient.name..", i: "..i)
+		debugger.write("    Item: "..ingredient.name..", i: "..i)
 		FactCalcSettings.main.input_count.item[ingredient.name] = 0
 	end
 	for i, ingredient in pairs(input_fluids) do
+		debugger.write("    Fluid: "..ingredient.name..", i: "..i)
 		FactCalcSettings.main.input_count.fluid[ingredient.name] = 0
 	end
 
+	--Creating workframe GUI element
 	local workframe = gui.add{
 		name = "FactCalc-workframe",
 		type = "scroll-pane",
@@ -124,15 +126,16 @@ function calculateFactory(player)
 		vertical_scroll_policy = "auto"
 	}
 
-	debugger.write("All preparings done. Calling build_recipes_tree()")
+	debugger.write("All preparations done. Calling build_recipes_tree()")
 	build_recipes_tree(workframe, {outputRecipe}, outputValue, "0")
-	debugger.write("build_recipes_tree() finished.\nEnd of log.\n\n\n")
+	debugger.write("Main build_recipes_tree() finished.\nEnd of log.\n\n\n")
 
 	--Calculate FactCalcSettings input data basing on FactCalcData
 	for i, entry in pairs(FactCalcData.inputs) do
 		FactCalcSettings.main.input_count[entry.type][entry.name] = FactCalcSettings.main.input_count[entry.type][entry.name] + entry.count
 	end
 
+	--Creating stats GUI
 	local stats_place = gui.add{
 		name = "FactCalc-resultStatistics",
 		type = "frame",
@@ -140,6 +143,7 @@ function calculateFactory(player)
 		caption = "Stats:"
 	}
 
+	--Items
 	local stats_items = stats_place.add{
 		name = "FactCalc-stats-items-table",
 		type = "table",
@@ -160,6 +164,7 @@ function calculateFactory(player)
 		}
 	end
 
+	--Fluids
 	local stats_fluids = stats_place.add{
 		name = "FactCalc-stats-fluids-table",
 		type = "table",
@@ -180,33 +185,34 @@ function calculateFactory(player)
 		}
 	end
 
+	--Make finished GUI visible
 	gui.style.visible = true
 end
 
 --Grow up this tree
 function build_recipes_tree(gui, recipes, craft_count, index)
-	debugger.write("Started cycle with index "..index) --Log another cycle...
-	local player = game.players[gui.player_index]      --Just a "default" variable
+	debugger.write("Started cycle with index: "..index) -- Log another cycle...
+	local player = game.players[gui.player_index]       -- Oftenly used variable
 
-	--"The Big Kostyl"
+	-- "The Big Kostyl'"
 	recursion_counter = recursion_counter + 1
 	if recursion_counter > settings.get_player_settings(player)["FactCalc-max-recursion"].value then
 		debugger.write(settings.get_player_settings(player)["FactCalc-max-recursion"].value.." cycles done. exiting build_recipes_tree().")
 		player.print("[DEBUG][FactoryCalculator] "..settings.get_player_settings(player)["FactCalc-max-recursion"].value.." cycles done. Calling return.")
-		player.print("Set higher number if calculation stopped in middle")
+		player.print("Set higher number if calculation stopped before end")
 		return
-	end --thanks _romanchik_ for this костыль
+	end -- Thanks _romanchik_ for this kostyl'
 
-	local assembler_speed = 0.75 -- In russian language this named "костыль". I need to make ability to choose assembler for each recipe...
+	local assembler_speed = 0.75 -- TODO: Make assembler choice
 
-	debugger.write("Getting recipe") --GOTTA DEBUG EVERYTHING
+	debugger.write("Getting recipe") -- GOTTA DEBUG EVERYTHING
 
-	--getting needed recipe
+	-- Getting recipe
 	local recipe = recipes[1]
 	local mark_dropdown = tablelength(recipes) > 1
 	local dropdown = {}
 	local dropdown_index = 0
-	debugger.write("table length: "..tablelength(recipes))
+	debugger.write("Table length: "..tablelength(recipes))
 	if mark_dropdown then
 		if FactCalcSettings.dropdowns["dropdown-"..index] ~= nil then
 			recipe = FactCalcSettings.dropdowns["dropdown-"..index].recipes[FactCalcSettings.dropdowns["dropdown-"..index].selected + 1]
@@ -223,32 +229,31 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 		player.print("[ERROR][FactCalc] Got null recipes at "..index)
 		return
 	else recipe = recipes[1] end
-	debugger.write("Recipe getting done.")
+	debugger.write("Recipe got succesfully")
 
-	--calculating count of assemblers and output items. Intrenally this step named "calculating"
+	-- Calculating count of assemblers and output items. Intrenally this step named "calculating"
 	local shown_count = 0
-	local assembler_count = craft_count * recipe.energy / assembler_speed / recipe.products[1].amount --Count of assemblers
-	--Calculate numbers depending on player's settings
-	if settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "calculte-ceil" then --Calculate with ceiled numbers
+	local assembler_count = craft_count * recipe.energy / assembler_speed / recipe.products[1].amount --C ount of assemblers
+	-- Calculate numbers depending on player's settings
+	if settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "calculte-ceil" then -- Calculate with ceiled numbers
 		assembler_count = math.ceil(assembler_count)
 		shown_count = assembler_count
-	elseif settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "show-ceil" then --Only show ceiled numbers
+	elseif settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "show-ceil" then -- Only show ceiled numbers
 		shown_count = math.ceil(assembler_count)
-	elseif settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "no-ceil" then   --Show and use raw numbers
+	elseif settings.get_player_settings(player)["FactCalc-ceil-numbers"].value == "no-ceil" then   -- Show and use raw numbers
 		shown_count = assembler_count
-	else --What if?
-		debugger.write("Got wrong setting value at calculating stage. Applying default.")
+	else -- What if?
+		debugger.write("Got wrong ceil-numbers setting value at calculating stage. Applying default.")
 		shown_count = math.ceil(assembler_count)
 	end
 
-
-	--Logs...
+	-- Logging these variables case they are important or calculations
 	debugger.write("Stage: calculating, index: "..index.."\nCalculations: assembler_count = math.ceil(("..craft_count.." * "..recipe.energy..") / "..assembler_speed.." / "..recipe.products[1].amount..") = "..assembler_count.."\nRecipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index)
 
 	craft_count = (assembler_count * assembler_speed) / recipe.energy * recipe.products[1].amount --Calulate craft count
-	player.print("[DEBUG][FactoryCalculator] index: "..index..", stage: calculating, recipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index) --Debug into game chat for easy in-game debug
+	player.print("[DEBUG][FactoryCalculator] index: "..index..", stage: calculating, recipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index) -- Debug into game chat for easy in-game debug
 
-	--Create GUI
+	-- Create GUI
 	local workplace = gui.add {
 		name = "FactCalc-workplace-" .. index,
 		type = "table",
@@ -303,50 +308,50 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 	end
 	debugger.write("gui creation done")
 
-	--next "branches"
+	-- Next "branches"
 	for ingredient_index, ingredient in pairs(recipe.ingredients) do
-		local craft_count_ingredient = craft_count * ingredient.amount --Craft count for current ingredient
+		local craft_count_ingredient = craft_count * ingredient.amount -- Craft count for current ingredient
 		local items_table
 		local input_prototypes
 
-		--Set variables depending on ingredient type
-		if ingredient.type == "item" then                    --item
+		-- Set variables depending on ingredient type
+		if ingredient.type == "item" then                    -- item
 			items_table = FactCalcSettings.main.input.items
 			input_prototypes = game.item_prototypes
-		elseif ingredient.type == "fluid" then               --fluid
+		elseif ingredient.type == "fluid" then               -- fluid
 			items_table = FactCalcSettings.main.input.fluids
 			input_prototypes = game.fluid_prototypes
-		else                                                 --What if?
+		else                                                 -- What if?
 			debugger.write("Unknown ingredient type: "..ingredient.type.." at "..index.."-"..ingredient_index.."-"..ingredient_index)
 			player.print("An error occured while calculating. Please leave a report on mod page and add log-file from script-output folder (script-output/FactCalc.log).")
 			return
 		end
 
-		--Decide what ingrediet is this: input or mid-ingredient
+		-- Decide what ingrediet is this: input or mid-ingredient
 		if has_value(items_table, ingredient.name) then
-			debugger.write("Got input ingredient. Index: "..index.."-"..ingredient_index..", ingredient name: "..ingredient.name) --Some log
-			recipes_tree_end(ingredient, craft_count_ingredient, index.."-"..ingredient_index, ingredients_flow) --End of "branch"
+			debugger.write("Got input ingredient. Index: "..index.."-"..ingredient_index..", ingredient name: "..ingredient.name)
+			recipes_tree_end(ingredient, craft_count_ingredient, index.."-"..ingredient_index, ingredients_flow) -- End of "branch"
 		else
-			debugger.write("Got mid-ingredient. Continuing tree. Index: "..index.."-"..ingredient_index..", ingredient name: "..ingredient.name) --Some log
-			build_recipes_tree(ingredients_flow, get_recipes_by_result(ingredient.name), craft_count_ingredient, index.."-"..ingredient_index) --Continue tree
+			debugger.write("Got mid-ingredient. Continuing tree. Index: "..index.."-"..ingredient_index..", ingredient name: "..ingredient.name)
+			build_recipes_tree(ingredients_flow, get_recipes_by_result(ingredient.name), craft_count_ingredient, index.."-"..ingredient_index) -- Continue tree
 		end
 	end
 
-	--Log end of function
+	-- Log end of function
 	debugger.write("Cycle with index "..index.." ended.")
 end
 
 function recipes_tree_end(ingredient, count, index, gui)
-	--Log start of the function
+	-- Log start of the function
 	debugger.write("Started end function. Index: "..index..", ingredient: "..ingredient.name)
 
-	--Get ingredient sprite
+	-- Get ingredient sprite
 	local ingredient_sprite = ""
 
-	--Get ingredient type
+	-- Get ingredient type
 	if ingredient.type == "fluid" then ingredient_sprite = "fluid/"..ingredient.name else ingredient_sprite = "item/"..ingredient.name end
 
-	--Create GUI
+	-- Create GUI
 	local workplace = gui.add {
 		name = "FactCalc-end-" .. index,
 		type = "flow",
@@ -367,9 +372,9 @@ function recipes_tree_end(ingredient, count, index, gui)
 		type = "sprite",
 		sprite = "FactCalc-arrow-sprite"
 	}
-	--Write index and count. Used in recalcultions
+	-- Remember index and count. Used in recalcultions
 	table.insert(FactCalcData.inputs, {index = index, count = count, name = ingredient.name, type = ingredient.type})
 
-	--Log end of the function
+	-- Log end of the function
 	debugger.write("End fucntion with index "..index.." ended")
 end
