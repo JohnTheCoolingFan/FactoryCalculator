@@ -8,8 +8,6 @@ FactCalcData = {}
 FactCalcSettings = {}
 recursion_counter = 0
 
-
-
 --Destroy GUI (if exist) and draw a new
 script.on_init(
 function()
