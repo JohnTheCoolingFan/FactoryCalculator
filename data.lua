@@ -10,18 +10,18 @@ data:extend({
    {
       type="sprite",
       name="FactCalc-arrow-sprite",
-      filename = "__core__/graphics/goto-icon.png",
+      filename = "__core__/graphics/icons/go-to-minibutton-arrow.png",
       priority = "extra-high",
-      width = 32,
-      height = 32,
+      width = 16,
+      height = 16,
    },
    {
       type="sprite",
       name="FactCalc-recalc-sprite",
       filename = "__core__/graphics/icons/reset.png",
       priority = "extra-high",
-      width = 128,
-      height = 128,
+      width = 32,
+      height = 32,
    }
 })
 

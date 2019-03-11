@@ -186,7 +186,7 @@ function calculateFactory(player)
 	end
 
 	--Make finished GUI visible
-	gui.style.visible = true
+	--gui.style.visible = true
 end
 
 --Grow up this tree
