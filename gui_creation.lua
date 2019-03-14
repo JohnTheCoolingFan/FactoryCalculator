@@ -32,14 +32,14 @@ function constructMainWindow(gui)
 		caption = "Settings",
 		direction = "vertical"
 	}
-	--frame.style.visible = false
+	frame.visible = false
 	local frameResult = gui.add{
 		name = "FactCalc-result-frame",
 		type = "frame",
 		caption = "Calculation result:",
 		direction = "horizontal"
 	}
-	--frameResult.style.visible = false
+	frameResult.visible = false
 
 	local chooseItem = frame.add{
 		name = "FactCalc-item-choose",
