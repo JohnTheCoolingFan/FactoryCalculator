@@ -57,13 +57,13 @@ function calculateFactory(player)
 
 	debugger.write("Calculating output craft value")
 	if settingsGui["FactCalc-count-number"]["FactCalc-radiobutton-number"].state then
-		if 		settingsGui["FactCalc-count-number"]["FactCalc-addition-number"]["FactCalc-flipbutton-number"].style.name == "flip_button_left" then
+		--if 		settingsGui["FactCalc-count-number"]["FactCalc-addition-number"]["FactCalc-flipbutton-number"].style.name == "flip_button_left" then
 			outputValue = tonumber(settingsGui["FactCalc-count-number"]["FactCalc-textfield-number"].text)
 			minsSecs = "seconds"
-		elseif  settingsGui["FactCalc-count-number"]["FactCalc-addition-number"]["FactCalc-flipbutton-number"].style.name == "flip_button_right" then
+		--[[elseif  settingsGui["FactCalc-count-number"]["FactCalc-addition-number"]["FactCalc-flipbutton-number"].style.name == "flip_button_right" then
 			outputValue = tonumber(settingsGui["FactCalc-count-number"]["FactCalc-textfield-number"].text) * 60
 			minsSecs = "minutes"
-		end
+		end]]
 
 	elseif settingsGui["FactCalc-count-belt"]["FactCalc-radiobutton-belt"].state then
 		if game.item_prototypes[settingsGui["FactCalc-count-belt"]["FactCalc-choose-belt"].elem_value].place_result.type == "transport-belt" then

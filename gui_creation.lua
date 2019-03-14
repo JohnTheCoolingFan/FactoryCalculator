@@ -92,7 +92,7 @@ function constructMainWindow(gui)
 		countNumberAddition.add{
 			name = "FactCalc-flipbutton-number",
 			type = "button",
-			style = "flip_button_left"
+			style = "switch"
 		}
 
 	local countBelt = frame.add{
@@ -130,7 +130,7 @@ function constructMainWindow(gui)
 		countBeltAddition.add{
 			name = "FactCalc-flipbutton-belt",
 			type = "button",
-			style = "flip_button_left"
+			style = "switch"
 		}
 
 	local countAssembler = frame.add{
