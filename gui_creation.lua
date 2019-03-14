@@ -91,7 +91,7 @@ function constructMainWindow(gui)
 		}
 		countNumberAddition.add{
 			name = "FactCalc-flipbutton-number",
-			type = "button",
+			type = "switch",
 			style = "switch"
 		}
 
@@ -129,7 +129,7 @@ function constructMainWindow(gui)
 		}
 		countBeltAddition.add{
 			name = "FactCalc-flipbutton-belt",
-			type = "button",
+			type = "switch",
 			style = "switch"
 		}
 
