@@ -8,7 +8,7 @@ function(event)
 
 	if not string.find(clicked.name, "FactCalc") then return end -- Check if this is fro FactCalc
 
-	if event.button == defines.mouse_button_type.right and clicked.name == "FactCalc-open-calculator" then -- Redraw GUI on RMB click
+	if event.button == defines.mouse_button_type.right then -- Redraw GUI on RMB click
 		player.print("Resetting UI...")
 		resetAndReloadUI(player)
 		return

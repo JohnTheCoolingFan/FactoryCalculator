@@ -209,11 +209,11 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 
 	-- Getting recipe
 	local recipe = recipes[1]
-	local mark_dropdown = tablelength(recipes) > 1
-	local dropdown = {}
-	local dropdown_index = 0
+	--local mark_dropdown = tablelength(recipes) > 1
+	--local dropdown = {}
+	--local dropdown_index = 0
 	debugger.write("Table length: "..tablelength(recipes))
-	if mark_dropdown then
+	--[[if mark_dropdown then
 		if FactCalcSettings.dropdowns["dropdown-"..index] ~= nil then
 			recipe = FactCalcSettings.dropdowns["dropdown-"..index].recipes[FactCalcSettings.dropdowns["dropdown-"..index].selected + 1]
 		else
@@ -228,7 +228,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 		debugger.write("[ERROR] Got null recipes at "..index)
 		player.print("[ERROR][FactCalc] Got null recipes at "..index)
 		return
-	else recipe = recipes[1] end
+	else recipe = recipes[1] end]]
 	debugger.write("Recipe got succesfully")
 
 	-- Calculating count of assemblers and output items. Intrenally this step named "calculating"
@@ -248,10 +248,10 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 	end
 
 	-- Logging these variables case they are important or calculations
-	debugger.write("Stage: calculating, index: "..index.."\nCalculations: assembler_count = math.ceil(("..craft_count.." * "..recipe.energy..") / "..assembler_speed.." / "..recipe.products[1].amount..") = "..assembler_count.."\nRecipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index)
+	debugger.write("Stage: calculating, index: "..index.."\nCalculations: assembler_count = math.ceil(("..craft_count.." * "..recipe.energy..") / "..assembler_speed.." / "..recipe.products[1].amount..") = "..assembler_count.."\nRecipe name: "..recipe.name..", craft_count: "..craft_count)
 
 	craft_count = (assembler_count * assembler_speed) / recipe.energy * recipe.products[1].amount --Calulate craft count
-	player.print("[DEBUG][FactoryCalculator] index: "..index..", stage: calculating, recipe name: "..recipe.name..", craft_count: "..craft_count..", dropdown_index: "..dropdown_index) -- Debug into game chat for easy in-game debug
+	player.print("[DEBUG][FactoryCalculator] index: "..index..", stage: calculating, recipe name: "..recipe.name..", craft_count: "..craft_count) -- Debug into game chat for easy in-game debug
 
 	-- Create GUI
 	local workplace = gui.add {
@@ -296,7 +296,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 		caption = "X" .. craft_count
 	}
 
-	--Idk what is this
+	--[[Idk what is this
 	if mark_dropdown then
 	dropdown_element = infoTable.add{
 		name = "FactCalc-recipe-dropdown-"..index,
@@ -305,7 +305,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 		selected_index = dropdown_index
 	}
 	FactCalcSettings.dropdowns["dropdown-"..index].element = dropdown_element
-	end
+	end]]
 	debugger.write("gui creation done")
 
 	-- Next "branches"
