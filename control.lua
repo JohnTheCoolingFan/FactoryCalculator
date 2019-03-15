@@ -99,8 +99,7 @@ function calculateFactory(player)
 				item = {},
 				fluid = {}
 			}
-		},
-		dropdowns = {}
+		}
 	}
 
 	debugger.write("Setting up FactCalcData")
@@ -209,26 +208,7 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 
 	-- Getting recipe
 	local recipe = recipes[1]
-	--local mark_dropdown = tablelength(recipes) > 1
-	--local dropdown = {}
-	--local dropdown_index = 0
 	debugger.write("Table length: "..tablelength(recipes))
-	--[[if mark_dropdown then
-		if FactCalcSettings.dropdowns["dropdown-"..index] ~= nil then
-			recipe = FactCalcSettings.dropdowns["dropdown-"..index].recipes[FactCalcSettings.dropdowns["dropdown-"..index].selected + 1]
-		else
-			FactCalcSettings.dropdowns["dropdown-"..index] = {}
-			FactCalcSettings.dropdowns["dropdown-"..index].selected = 0
-			FactCalcSettings.dropdowns["dropdown-"..index].recipes = recipes
-			dropdown = form_dropdown(recipes)
-		end
-		dropdown_index = FactCalcSettings.dropdowns["dropdown-"..index].selected
-		debugger.write("dropdown_index: "..dropdown_index)
-	elseif recipes == {} then
-		debugger.write("[ERROR] Got null recipes at "..index)
-		player.print("[ERROR][FactCalc] Got null recipes at "..index)
-		return
-	else recipe = recipes[1] end]]
 	debugger.write("Recipe got succesfully")
 
 	-- Calculating count of assemblers and output items. Intrenally this step named "calculating"
@@ -296,16 +276,6 @@ function build_recipes_tree(gui, recipes, craft_count, index)
 		caption = "X" .. craft_count
 	}
 
-	--[[Idk what is this
-	if mark_dropdown then
-	dropdown_element = infoTable.add{
-		name = "FactCalc-recipe-dropdown-"..index,
-		type = "drop-down",
-		items = dropdown,
-		selected_index = dropdown_index
-	}
-	FactCalcSettings.dropdowns["dropdown-"..index].element = dropdown_element
-	end]]
 	debugger.write("gui creation done")
 
 	-- Next "branches"
