@@ -67,7 +67,7 @@ function calculateFactory(player)
 	elseif settingsGui["FactCalc-count-belt"]["FactCalc-radiobutton-belt"].state then
 		if game.item_prototypes[settingsGui["FactCalc-count-belt"]["FactCalc-choose-belt"].elem_value].place_result.type == "transport-belt" then
 			outputValue = game.item_prototypes[settingsGui["FactCalc-count-belt"]["FactCalc-choose-belt"].elem_value].place_result.belt_speed * beltSpeedMultiplier
-			if settingsGui["FactCalc-count-belt"]["FactCalc-addition-belt"]["FactCalc-flipbutton-belt"].style.name == "flip_button_right" then outputValue = outputValue / 2 end
+			if settingsGui["FactCalc-count-belt"]["FactCalc-fullhalf-belt"].caption == "half" then outputValue = outputValue / 2 end
 		else
 			player.print("Please, choose only transport belt items. If you selected belt item and this error message still appear, please report about this on mod page or on GitHub.")
 		end
