@@ -79,21 +79,16 @@ function constructMainWindow(gui)
 		text = "1"
 	}
 	TextfieldNumber.style.width = 40
-		local countNumberAddition = countNumber.add {
-			name = "FactCalc-addition-number",
-			type = "flow",
-			direction = "vertical"
-		}
-		countNumberAddition.add{
-			name = "FactCalc-label-number",
-			type = "label",
-			caption = "sec/min"
-		}
-		countNumberAddition.add{
-			name = "FactCalc-flipbutton-number",
-			type = "button",
-			caption = "Seconds"
-		}
+	countNumber.add{
+		name = "FactCalc-slash-number",
+		type = "label",
+		caption = ""
+	}
+	countNumber.add{
+		name = "FactCalc-secmin-number",
+		type = "button",
+		caption = "sec"
+	}
 
 	local countBelt = frame.add{
 		name = "FactCalc-count-belt",
@@ -106,7 +101,7 @@ function constructMainWindow(gui)
 		state = false
 	}
 	countBelt.add{
-		name = "FactCalc-label-belt0",
+		name = "FactCalc-label-belt",
 		type = "label",
 		caption = "Output belt:"
 	}
@@ -117,21 +112,11 @@ function constructMainWindow(gui)
 		item = "transport-belt",
 		tooltip = "Please, select only belts."
 	}
-		local countBeltAddition = countBelt.add{
-			name = "FactCalc-addition-belt",
-			type = "flow",
-			direction = "vertical"
-		}
-		countBeltAddition.add{
-			name = "FactCalc-label-belt1",
-			type = "label",
-			caption = "full/half"
-		}
-		countBeltAddition.add{
-			name = "FactCalc-flipbutton-belt",
-			type = "button",
-			caption = "Full"
-		}
+	countBelt.add{
+		name = "FactCalc-fullhalf-belt",
+		type = "button",
+		caption = "full"
+	}
 
 	local countAssembler = frame.add{
 		name = "FactCalc-count-assembler",
