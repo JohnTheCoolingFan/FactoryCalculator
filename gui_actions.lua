@@ -16,6 +16,7 @@ function(event)
 
 	local settingsFrame = cGui["FactCalc-main-flow"]["FactCalc-settings-frame"]
 
+	-- Actually buttons
 	if clicked.name == "FactCalc-open-calculator" then   -- "Open calculator" button
 		settingsFrame.visible = true
 	elseif string.find(clicked.name, "radiobutton") then -- Radiobuttons
