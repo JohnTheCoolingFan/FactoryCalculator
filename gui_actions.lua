@@ -30,8 +30,8 @@ function(event)
 			settingsFrame["FactCalc-count-number"]["FactCalc-radiobutton-number"].state = false
 		end
 	elseif string.find(clicked.name, "secmin") then -- Flip buttons
-		if     clicked.caption == "sec" then clicked.caption = "min"
-		elseif clicked.caption == "min" then clicked.caption = "sec" end
+		if     clicked.caption == "sec"  then clicked.caption = "min"
+		elseif clicked.caption == "min"  then clicked.caption = "sec"  end
 	elseif string.find(clicked.name, "fullhalf") then
 		if     clicked.caption == "full" then clicked.caption = "half"
 		elseif clicked.caption == "half" then clicked.caption = "full" end
