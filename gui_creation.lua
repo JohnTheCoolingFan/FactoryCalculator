@@ -82,7 +82,7 @@ function constructMainWindow(gui)
 	countNumber.add{
 		name = "FactCalc-slash-number",
 		type = "label",
-		caption = ""
+		caption = "/"
 	}
 	countNumber.add{
 		name = "FactCalc-secmin-number",
