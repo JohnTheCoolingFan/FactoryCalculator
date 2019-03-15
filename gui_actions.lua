@@ -29,20 +29,12 @@ function(event)
 			settingsFrame["FactCalc-count-belt"]["FactCalc-radiobutton-belt"].state = false
 			settingsFrame["FactCalc-count-number"]["FactCalc-radiobutton-number"].state = false
 		end
-	--[[elseif string.find(clicked.name, "flipbutton") then -- Flip flipbuttons
-		if clicked.name == "FactCalc-flipbutton-number" then
-			if clicked.style.name == "flip_button_left" then
-				clicked.style = "flip_button_right"
-			elseif clicked.style.name == "flip_button_right" then
-				clicked.style = "flip_button_left"
-			end
-		elseif clicked.name == "FactCalc-flipbutton-belt" then
-			if clicked.style.name == "flip_button_left" then
-				clicked.style = "flip_button_right"
-			elseif clicked.style.name == "flip_button_right" then
-				clicked.style = "flip_button_left"
-			end
-		end]]
+	elseif string.find(clicked.name, "secmin") then -- Flip buttons
+		if     clicked.caption == "sec" then clicked.caption = "min"
+		elseif clicked.caption == "min" then clicked.caption = "sec" end
+	elseif string.find(clicked.name, "fullhalf") then
+		if     clicked.caption == "full" then clicked.caption = "half"
+		elseif clicked.caption == "half" then clicked.caption = "full" end
 	elseif clicked.name == "FactCalc-calculate" then
 		calculateFactory(player)
 	end
