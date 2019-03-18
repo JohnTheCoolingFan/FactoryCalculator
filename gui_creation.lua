@@ -104,7 +104,7 @@ function constructMainWindow(gui)
 	countBelt.add{
 		name = "FactCalc-label-belt",
 		type = "label",
-		caption = "Output belt:"
+		caption = "Belt:"
 	}
 	countBelt.add{
 		name = "FactCalc-choose-belt",
