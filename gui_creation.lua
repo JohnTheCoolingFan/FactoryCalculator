@@ -84,11 +84,12 @@ function constructMainWindow(gui)
 		type = "label",
 		caption = "/"
 	}
-	countNumber.add{
+	local secmin = countNumber.add{
 		name = "FactCalc-secmin-number",
 		type = "button",
 		caption = "sec"
 	}
+	secmin.style.minimal_width = 30
 
 	local countBelt = frame.add{
 		name = "FactCalc-count-belt",
@@ -112,11 +113,12 @@ function constructMainWindow(gui)
 		item = "transport-belt",
 		tooltip = "Please, select only belts."
 	}
-	countBelt.add{
+	local fullhalf = countBelt.add{
 		name = "FactCalc-fullhalf-belt",
 		type = "button",
 		caption = "full"
 	}
+	fullhalf.style.minimal_width = 30
 
 	local countAssembler = frame.add{
 		name = "FactCalc-count-assembler",
