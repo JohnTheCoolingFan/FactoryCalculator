@@ -111,7 +111,7 @@ function constructMainWindow(gui)
 		type = "choose-elem-button",
 		elem_type = "item",
 		item = "transport-belt",
-		tooltip = "Please, select only belts."
+		tooltip = "Please, select only belts (Filtering items is unavailable)"
 	}
 	local fullhalf = countBelt.add{
 		name = "FactCalc-fullhalf-belt",
@@ -135,7 +135,7 @@ function constructMainWindow(gui)
 		type = "choose-elem-button",
 		elem_type = "item",
 		item = "assembling-machine-1",
-		tooltip = "Please, select only assembling machines."
+		tooltip = "Please, select only assembling machines (Filter is unavailable)"
 	}
 	countAssembler.add{
 		name = "FactCalc-X-assembler",
