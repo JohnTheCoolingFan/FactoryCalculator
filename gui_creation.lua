@@ -167,13 +167,13 @@ function constructMainWindow(gui)
 			name = "FactCalc-choose-resource-item-" .. i,
 			type = "choose-elem-button",
 			elem_type = "item",
-			tooltip = "Select items that will come into this factory"
+			tooltip = "Select items that this factory will consume"
 		}
 		fluidsTable.add{
 			name = "FactCalc-choose-resource-fluid-" .. i,
 			type = "choose-elem-button",
 			elem_type = "fluid",
-			tooltip = "Select fluids that will come into this factory"
+			tooltip = "Select fluids that this factory will consume"
 		}
 	end
 
