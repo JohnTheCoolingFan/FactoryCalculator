@@ -60,7 +60,7 @@ function constructMainWindow(gui)
 	frame.add{
 		name = "FactCalc-count-label",
 		type = "label",
-		caption = "Count:"
+		caption = "Craft speed:"
 	}
 
 	local countNumber = frame.add{
