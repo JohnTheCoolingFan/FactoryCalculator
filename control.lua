@@ -23,7 +23,7 @@ function(e)
     resetAndReloadUI(game.players[e.player_index]) -- Redraw GUI
     -- "Welcome" and a small tutorial
     game.players[e.player_index].print("Welcome to Factory Calculator, to open Calculator press button at the upper left")
-    game.players[e.player_index].print("Mod is in early beta, report any issues on the GitHub or Factorio mod page")
+    game.players[e.player_index].print("Mod is still in development, please report any issues on the GitHub or Factorio mod page")
 end
 )
 
